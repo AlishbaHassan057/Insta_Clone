@@ -1,6 +1,11 @@
 const AsyncHandler = require('express-async-handler');
 const User = require('../models/userModel');
 const bcrypt = require('bcrypt');
+
+
+
+
+
 const registerUser = AsyncHandler(async (req, res) => {
     const { f_name, l_name, p_mail, password, date, month, year, gender } = req.body;
     if (!f_name || !l_name || !p_mail || !password || !date || !month || !year || !gender) {
@@ -12,13 +17,21 @@ const registerUser = AsyncHandler(async (req, res) => {
     } else {
         const salt = await bcrypt.genSalt(10);
         const hashedpass = await bcrypt.hash(password, salt)
-        const newUser = await User.create({
-            f_name, l_name, p_mail, password: hashedpass, date, month, year, gender
 
-        })
-        res.json(newUser)
+        const newUser = new User({ f_name, l_name, p_mail, password: hashedpass, date, month, year, gender })
+        await newUser.save()
+        // const newUser = await User.create({
+        //     f_name, l_name, p_mail, password: hashedpass, date, month, year, gender
+
+        // })
+        res.send(newUser)
     }
-});
+
+
+})
+    ;
+
+
 
 module.exports = {
     registerUser

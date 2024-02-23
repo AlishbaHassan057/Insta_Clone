@@ -4,11 +4,19 @@ const connect = require('./config/ConnectDB');
 const app = express();
 require('dotenv').config();
 require('colors');
+const cors = require('cors');
+app.use(cors())
 connect();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }))
-app.use('/api/user', require('./routes/userRoutes'))
+
+app.use('/api/users/', require('./routes/userRoutes'))
+
+app.use('/api/blogs/', require('./routes/blogRoutes'))
+
+
+
 app.use(errorHandler)
 app.listen(process.env.PORT, () => console.log(`Your Server has been started on Port:${process.env.PORT.blue}`))
-// final version
+// final version    
