@@ -2,10 +2,11 @@ const AsyncHandler = require("express-async-handler");
 const Blog = require("../models/blogModel");
 
 const addBlog = AsyncHandler(async (req, res) => {
-  const { title, description, dated } = req.body;
+  const { title, image, description, dated } = req.body;
   try {
     const addedBlog = await Blog.create({
       title,
+      image,
       description,
       dated,
     });
