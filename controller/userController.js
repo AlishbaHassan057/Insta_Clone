@@ -52,13 +52,16 @@ const registerUser = AsyncHandler(async (req, res) => {
 // LOG IN
 const loginUser = AsyncHandler(async (req, res) => {
   const { p_mail, password } = req.body;
+
   if (!p_mail || !password) {
     res.status(400);
     throw new Error("please enter the relevant fields");
   }
+
   const findUser = await User.findOne({
     p_mail,
   });
+
   if (!findUser) {
     res.status(404);
     throw new Error("User not found");

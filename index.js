@@ -13,7 +13,8 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use("/api/users/", require("./routes/userRoutes"));
 app.use("/api/blogs/", require("./routes/blogRoute"));
-
+app.use("/api/events/", require("./routes/eventRoute"));
+app.use("/api/register/", require("./routes/registerRoute"));
 app.use(errorHandler);
 app.listen(process.env.PORT, () =>
   console.log(`Your Server has been started on Port:${process.env.PORT.blue}`)
