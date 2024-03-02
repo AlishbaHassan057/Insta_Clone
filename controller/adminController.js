@@ -1,8 +1,8 @@
 const AsyncHandler = require("express-async-handler");
-const User = require("../models/userModel");
+const Admin = require("../models/adminModel");
 const bcrypt = require("bcrypt");
 
-const registerUser = AsyncHandler(async (req, res) => {
+const registerAdmin = AsyncHandler(async (req, res) => {
   const { f_name, l_name, p_mail, password, date, month, year, gender } =
     req.body;
   if (
@@ -24,7 +24,7 @@ const registerUser = AsyncHandler(async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedpass = await bcrypt.hash(password, salt);
 
-    const createdUser = await User.create({
+    const createdUser = await Admin.create({
       f_name,
       l_name,
       p_mail,
@@ -50,7 +50,7 @@ const registerUser = AsyncHandler(async (req, res) => {
   }
 });
 // LOG IN
-const loginUser = AsyncHandler(async (req, res) => {
+const loginAdmin = AsyncHandler(async (req, res) => {
   const { p_mail, password } = req.body;
 
   if (!p_mail || !password) {
@@ -58,7 +58,7 @@ const loginUser = AsyncHandler(async (req, res) => {
     throw new Error("please enter the relevant fields");
   }
 
-  const findUser = await User.findOne({
+  const findUser = await Admin.findOne({
     p_mail,
   });
 
@@ -75,6 +75,6 @@ const loginUser = AsyncHandler(async (req, res) => {
 });
 
 module.exports = {
-  registerUser,
-  loginUser,
+  registerAdmin,
+  loginAdmin,
 };
